@@ -5,6 +5,7 @@ from typing import List
 from dataclasses import dataclass
 
 from Options import OptionSet
+from Options import DefaultOnToggle
 
 from ..game import Game
 from ..game_objective_template import GameObjectiveTemplate
@@ -16,6 +17,7 @@ from ..enums import KeymastersKeepGamePlatforms
 class Splatoon3ArchipelagoOptions:
     splatoon_3_weapons: Splatoon3Weapons
     splatoon_3_modes: Splatoon3Modes
+    splatoon_3_async: Splatoon3Async
 
 
 class Splatoon3Game(Game):
@@ -43,7 +45,7 @@ class Splatoon3Game(Game):
                     },
                     is_time_consuming=False,
                     is_difficult=False,
-                    weight=70,
+                    weight=7,
                 ),
                 GameObjectiveTemplate(
                     label="Win a Regular Battle using the WEAPON and the abilities HEAD, SHIRT, and SHOE",
@@ -55,26 +57,24 @@ class Splatoon3Game(Game):
                     },
                     is_time_consuming=False,
                     is_difficult=False,
-                    weight=35,
+                    weight=5,
                 ),
             ])
 
         if "Anarchy Battle" in self.modes():
             templates.extend([
                 GameObjectiveTemplate(
-                    label="Win a ANARCHY match using the WEAPON",
+                    label="Win an Anarchy Battle using the WEAPON",
                     data={
-                        "ANARCHY": (self.anarchy_modes, 1),
                         "WEAPON": (self.weapons, 1),
                     },
                     is_time_consuming=False,
                     is_difficult=False,
-                    weight=500,
+                    weight=15,
                 ),
                 GameObjectiveTemplate(
-                    label="Win a ANARCHY match using the WEAPON and the abilities HEAD, SHIRT, and SHOE",
+                    label="Win an Anarchy Battle using the WEAPON and the abilities HEAD, SHIRT, and SHOE",
                     data={
-                        "ANARCHY": (self.anarchy_modes, 1),
                         "WEAPON": (self.weapons, 1),
                         "HEAD": (self.headgear, 1),
                         "SHIRT": (self.clothes, 1),
@@ -82,9 +82,35 @@ class Splatoon3Game(Game):
                     },
                     is_time_consuming=False,
                     is_difficult=False,
-                    weight=250,
+                    weight=6,
                 ),
             ])
+            if self.splatoon_async:
+                templates.extend([
+                    GameObjectiveTemplate(
+                        label="Win a ANARCHY match using the WEAPON",
+                        data={
+                            "ANARCHY": (self.anarchy_modes, 1),
+                            "WEAPON": (self.weapons, 1),
+                        },
+                        is_time_consuming=False,
+                        is_difficult=False,
+                        weight=15,
+                    ),
+                    GameObjectiveTemplate(
+                        label="Win a ANARCHY match using the WEAPON and the abilities HEAD, SHIRT, and SHOE",
+                        data={
+                            "ANARCHY": (self.anarchy_modes, 1),
+                            "WEAPON": (self.weapons, 1),
+                            "HEAD": (self.headgear, 1),
+                            "SHIRT": (self.clothes, 1),
+                            "SHOE": (self.shoes, 1),
+                        },
+                        is_time_consuming=False,
+                        is_difficult=False,
+                        weight=6,
+                    ),
+                ])
 
         if "Salmon Run" in self.modes():
             templates.extend([
@@ -95,7 +121,7 @@ class Splatoon3Game(Game):
                     },
                     is_time_consuming=True,
                     is_difficult=False,
-                    weight=15,
+                    weight=3,
                 ),
             ])
 
@@ -108,7 +134,7 @@ class Splatoon3Game(Game):
                     },
                     is_time_consuming=False,
                     is_difficult=False,
-                    weight=15,
+                    weight=3,
                 ),
                 GameObjectiveTemplate(
                     label="Complete mission: SITE1 at Site 1",
@@ -117,7 +143,7 @@ class Splatoon3Game(Game):
                     },
                     is_time_consuming=False,
                     is_difficult=False,
-                    weight=15,
+                    weight=3,
                 ),
                 GameObjectiveTemplate(
                     label="Complete mission: SITE2 at Site 2",
@@ -126,7 +152,7 @@ class Splatoon3Game(Game):
                     },
                     is_time_consuming=False,
                     is_difficult=False,
-                    weight=15,
+                    weight=3,
                 ),
                 GameObjectiveTemplate(
                     label="Complete mission: SITE3 at Site 3",
@@ -135,7 +161,7 @@ class Splatoon3Game(Game):
                     },
                     is_time_consuming=False,
                     is_difficult=False,
-                    weight=15,
+                    weight=3,
                 ),
                 GameObjectiveTemplate(
                     label="Complete mission: SITE4 at Site 4",
@@ -144,7 +170,7 @@ class Splatoon3Game(Game):
                     },
                     is_time_consuming=False,
                     is_difficult=False,
-                    weight=15,
+                    weight=3,
                 ),
                 GameObjectiveTemplate(
                     label="Complete mission: SITE5 at Site 5",
@@ -153,7 +179,7 @@ class Splatoon3Game(Game):
                     },
                     is_time_consuming=False,
                     is_difficult=False,
-                    weight=15,
+                    weight=3,
                 ),
                 GameObjectiveTemplate(
                     label="Complete mission: SITE6 at Site 6",
@@ -162,21 +188,21 @@ class Splatoon3Game(Game):
                     },
                     is_time_consuming=False,
                     is_difficult=False,
-                    weight=15,
+                    weight=3,
                 ),
                 GameObjectiveTemplate(
                     label="Complete mission: Rocket Battle",
                     data=dict(),
                     is_time_consuming=True,
                     is_difficult=False,
-                    weight=15,
+                    weight=3,
                 ),
                 GameObjectiveTemplate(
                     label="Complete mission: After Alterna",
                     data=dict(),
                     is_time_consuming=True,
                     is_difficult=True,
-                    weight=15,
+                    weight=3,
                 ),
             ])
 
@@ -189,7 +215,7 @@ class Splatoon3Game(Game):
                     },
                     is_time_consuming=True,
                     is_difficult=False,
-                    weight=15,
+                    weight=3,
                 ),
                 GameObjectiveTemplate(
                     label="Clear Floor 30 using PALETTE Palette and no vending machine visits",
@@ -198,7 +224,7 @@ class Splatoon3Game(Game):
                     },
                     is_time_consuming=True,
                     is_difficult=False,
-                    weight=10,
+                    weight=2,
                 ),
                 GameObjectiveTemplate(
                     label="Clear Floor 30 using PALETTE Palette with no more than MARINA Marina hacks",
@@ -208,7 +234,7 @@ class Splatoon3Game(Game):
                     },
                     is_time_consuming=True,
                     is_difficult=False,
-                    weight=10,
+                    weight=2,
                 ),
                 GameObjectiveTemplate(
                     label="Clear Floor 30 using PALETTE Palette with no more than MARINA Marina hacks and no vending machine visits",
@@ -218,7 +244,7 @@ class Splatoon3Game(Game):
                     },
                     is_time_consuming=True,
                     is_difficult=True,
-                    weight=5,
+                    weight=1,
                 ),
             ])
 
@@ -232,7 +258,7 @@ class Splatoon3Game(Game):
                     },
                     is_time_consuming=True,
                     is_difficult=False,
-                    weight=15,
+                    weight=3,
                 ),
             ])
 
@@ -472,6 +498,11 @@ class Splatoon3Game(Game):
 
         return sorted(shoes)
 
+    @property
+    def splatoon_async(self) -> bool:
+        return bool(self.archipelago_options.splatoon_3_async.value)
+
+
 # Archipelago Options
 class Splatoon3Weapons(OptionSet):
     """
@@ -643,3 +674,10 @@ class Splatoon3Modes(OptionSet):
     ]
 
     default = valid_keys
+
+class Splatoon3Async(DefaultOnToggle):
+    """
+    Indicates if you are planning to play this game in an async (True for async, False for sync)
+    """
+
+    display_name = "Splatoon 3 Async"
